@@ -45,7 +45,7 @@ func NotEquals(tb testing.TB, exp, act interface{}) {
 
 
 // HereInfo prints useful information about an execution point
-func HereInfo() {
+func HereInfo(message interface{}) {
 
 	// Need space only for PC of caller.
 	pc := make([]uintptr, 1)
@@ -61,5 +61,10 @@ func HereInfo() {
 	frame, _ := frames.Next()
 
 	// Print file and line number, then return.
-	fmt.Printf("%s:%d\n", frame.File, frame.Line)
+	fmt.Printf("%s:%d: %s(): %v\n",
+		filepath.Base(frame.File),
+		frame.Line,
+		frame.Function,
+		message,
+	)
 }
